@@ -1,0 +1,45 @@
+# Git
+.git
+.gitignore
+
+# Environment files - never bake secrets into the image
+.env
+.env.*
+
+# Test files
+tests/
+*_test.go
+
+# Development binaries
+tmp/
+temp/
+
+# Documentation
+*.md
+!README.md
+
+# CI/CD
+.github/
+
+# workspace
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Binaries
+bin/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml

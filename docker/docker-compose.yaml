@@ -52,11 +52,39 @@ services:
     networks:
       - bank-network
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
+      test:
+        [
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "--spider",
+          "http://localhost:8080/health",
+        ]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
+
+  gateway:
+    build:
+      context: ../gateway
+      dockerfile: Dockerfile
+    container_name: ficmart-gateway
+    restart: unless-stopped
+    environment:
+      PORT: 8088
+      DATABASE_URL: ${DATABASE_URL}
+      BANK_BASE_URL: http://bank-api:8080
+      MAX_RETRIES: 3
+      RETRY_BASE_DELAY_MS: 100
+    ports:
+      - "8088:8088"
+    depends_on:
+      bank-api:
+        condition: service_healthy
+    networks:
+      - bank-network
 
 networks:
   bank-network:
