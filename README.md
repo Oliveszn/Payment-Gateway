@@ -9,9 +9,9 @@ management, idempotency, and resilient failure handling.
 
 ```
 payment-gateway/
-├── bank/          → Mock bank API (provided, not written by me)
+├── bank/          → Mock bank API
 ├── docker/        → Docker Compose for running everything together
-└── gateway/       → Payment gateway (built by me)
+└── gateway/       → Payment gateway
 ```
 
 ## Architecture
