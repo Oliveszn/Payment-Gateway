@@ -7,16 +7,20 @@ management, idempotency, and resilient failure handling.
 
 ## What's in this repo
 
+```
 payment-gateway/
-├── bank/ → Mock bank API
-├── docker/ → Docker Compose for running everything together
-└── gateway/ → Payment gateway
+├── bank/          → Mock bank API (provided, not written by me)
+├── docker/        → Docker Compose for running everything together
+└── gateway/       → Payment gateway (built by me)
+```
 
 ## Architecture
 
+```
 FicMart → Gateway API → Service Layer → Bank Client → Mock Bank
 ↓
 PostgreSQL (Neon)
+```
 
 The gateway is organized into distinct layers:
 
@@ -29,9 +33,11 @@ The gateway is organized into distinct layers:
 
 ## Payment Lifecycle
 
+```
 PENDING → AUTHORIZED → CAPTURED → REFUNDED
 ↓
 VOIDED
+```
 
 Invalid transitions are rejected at the domain layer regardless of what
 the bank accepts. A voided payment cannot be captured. A captured payment
