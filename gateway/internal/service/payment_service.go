@@ -11,13 +11,22 @@ import (
 	"github.com/google/uuid"
 )
 
-// PaymentService orchestrates all payment operations
-type PaymentService struct {
-	repo       repository.PaymentRepository
-	bankClient *bank.Client
+type BankClient interface {
+	Authorize(context.Context, string, bank.AuthorizeRequest) (*bank.AuthorizeResponse, error)
+	Capture(context.Context, string, bank.CaptureRequest) (*bank.CaptureResponse, error)
+	Void(context.Context, string, bank.VoidRequest) (*bank.VoidResponse, error)
+	Refund(context.Context, string, bank.RefundRequest) (*bank.RefundResponse, error)
 }
 
-func New(repo repository.PaymentRepository, bankClient *bank.Client) *PaymentService {
+// PaymentService orchestrates all payment operations
+type PaymentService struct {
+	repo repository.PaymentRepository
+	// bankClient *bank.Client
+	bankClient BankClient
+}
+
+// func New(repo repository.PaymentRepository, bankClient *bank.Client) *PaymentService {
+func New(repo repository.PaymentRepository, bankClient BankClient) *PaymentService {
 	return &PaymentService{
 		repo:       repo,
 		bankClient: bankClient,
